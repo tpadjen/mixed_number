@@ -134,6 +134,11 @@ describe MixedNumber do
 			  expect(mixed.to_s).to eq(mixed.to_str) 
 			end
 
+			it 'removes zero parts' do
+			  expect(MixedNumber.new("2/10").to_s).to eq("1/5")
+			  expect(MixedNumber.new("1 0/10").to_s).to eq("1")
+			end
+
 		end
 
 	end

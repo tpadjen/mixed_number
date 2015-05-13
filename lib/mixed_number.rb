@@ -79,21 +79,11 @@ class MixedNumber < Numeric
 		end
 
 		def stringify_mixed_parts(whole_part, rational_part)
-			if whole_part == 0
-				if rational_part.to_f > FRACTIONAL_TOLERANCE 
-					s = "#{rational_part.to_s}"
-				else
-					s = "0"
-				end
-			else
-				if rational_part.to_f > FRACTIONAL_TOLERANCE
-					s = "#{whole_part} #{rational_part.to_s}"
-				else
-					s = "#{whole_part}"
-				end
-			end
+			sign + remove_zeroes("#{whole_part} #{rational_part.to_s}")
+		end
 
-			sign + s
+		def remove_zeroes(string)
+			string.gsub(/^0 /, "").gsub(/ 0$/, "").gsub(/ 0\/\d+/, "")
 		end
 
 	class MixedNumberFormatError < StandardError; end
