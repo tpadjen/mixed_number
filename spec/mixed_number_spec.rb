@@ -46,8 +46,8 @@ describe MixedNumber do
 		    expect(MixedNumber.new("2 2/5") - 1.7).to eq(7.0/10)
 		  end
 
-		  it 'fails to add to something non-coercable' do
-		    expect{MixedNumber.new(1) + Object.new}.to raise_error(TypeError)
+		  it 'fails to subtract from something non-coercable' do
+		    expect{MixedNumber.new(1) - Object.new}.to raise_error(TypeError)
 		  end
 		end
 
