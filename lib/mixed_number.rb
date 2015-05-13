@@ -9,8 +9,6 @@ class MixedNumber < Numeric
 	RATIONAL_NUMBER_REGEX = /^-?\d+\/\d+$/
 	MIXED_NUMBER_REGEX    = /^-?\d+\s+\d+\/\d+$/
 
-	FRACTIONAL_TOLERANCE = 0.01
-
 	def_delegators :@value, :abs, :to_r
 
 	def initialize(input=0)

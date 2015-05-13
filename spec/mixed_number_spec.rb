@@ -170,6 +170,8 @@ describe MixedNumber do
 		  expect(MixedNumber.new(2).fraction).to eq(0)
 		  expect(MixedNumber.new("2 1/2").fraction).to eq(0.5)
 		  expect(MixedNumber.new("1/2").fraction).to eq(0.5)
+		  expect(MixedNumber.new("1 99999/100000").fraction).to eq(Rational(99999, 100000))
+		  expect(MixedNumber.new(1 + Math::PI).fraction.to_f).to be_within(0.0000001).of(Math::PI - 3) 
 		end
 
 	end
