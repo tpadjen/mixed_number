@@ -143,4 +143,20 @@ describe MixedNumber do
 
 	end
 
+	context 'Parts' do
+	  
+		it 'finds the whole part' do
+		  expect(MixedNumber.new(2).whole).to eq(2)
+		  expect(MixedNumber.new("2 1/2").whole).to eq(2)
+		  expect(MixedNumber.new("1/2").whole).to eq(0)
+		end
+
+		it 'finds the fractional part' do
+		  expect(MixedNumber.new(2).fraction).to eq(0)
+		  expect(MixedNumber.new("2 1/2").fraction).to eq(0.5)
+		  expect(MixedNumber.new("1/2").fraction).to eq(0.5)
+		end
+
+	end
+
 end

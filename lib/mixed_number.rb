@@ -21,6 +21,14 @@ class MixedNumber < Numeric
 		@value = input.split.map { |r| Rational(r) }.reduce(reduction_method).to_r
 	end
 
+	def whole
+		value.to_i
+	end
+
+	def fraction
+		((value.abs - whole.abs) % 1).to_r
+	end
+
 	def ==(other)
 		@value == other
 	end
@@ -51,7 +59,7 @@ class MixedNumber < Numeric
 	end
 
 	def to_s
-		stringify_mixed_parts(*find_mixed_parts(value))
+		sign + remove_zeroes("#{whole.abs} #{fraction}")
 	end
 
 	def to_str
@@ -66,20 +74,6 @@ class MixedNumber < Numeric
 
 		def sign
 			value < 0 ? "-" : ""
-		end
-
-		def find_mixed_parts(n)
-			rational_part = value.abs
-			whole_part = 0
-			while rational_part >= 1 do
-				whole_part += 1
-				rational_part -= 1
-			end
-			[whole_part, rational_part]
-		end
-
-		def stringify_mixed_parts(whole_part, rational_part)
-			sign + remove_zeroes("#{whole_part} #{rational_part.to_s}")
 		end
 
 		def remove_zeroes(string)
