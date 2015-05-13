@@ -36,36 +36,16 @@ class MixedNumber < Numeric
 	end
 
 	def +(other)
-		if other.is_a? String
-			to_s + other
-		elsif other.is_a? MixedNumber
-    	MixedNumber.new(value + other.value)
-    elsif other.is_a? Numeric
-    	MixedNumber.new(value + other)
-    else
-    	if other.respond_to? :coerce
-    		a, b = other.coerce(self)
-    		a + b
-    	else
-    		raise TypeError, "#{other.class} can't be coerced into MixedNumber"
-    	end
-    end
+		return to_s + other if other.is_a? String
+
+		combine(:+)
 	end
 
 	def -(other)
-		if other.is_a? MixedNumber
-    	MixedNumber.new(value - other.value)
-    elsif other.is_a? Numeric
-    	MixedNumber.new(value - other)
-    else
-    	if other.respond_to? :coerce
-    		a, b = other.coerce(self)
-    		a - b
-    	else
-    		raise TypeError, "#{other.class} can't be coerced into MixedNumber"
-    	end
-    end
+		combine(:-)
 	end
+
+
 		
 	def coerce(other)
 		[MixedNumber.new(other), self]
@@ -91,6 +71,21 @@ class MixedNumber < Numeric
 
 		def remove_zeroes(string)
 			string.gsub(/^0 /, "").gsub(/ 0$/, "").gsub(/ 0\/\d+/, "")
+		end
+
+		def combine(method)
+			if other.is_a? MixedNumber
+	    	MixedNumber.new(value.send(method, other.value))
+	    elsif other.is_a? Numeric
+	    	MixedNumber.new(value.send(method, other))
+	    else
+	    	if other.respond_to? :coerce
+	    		a, b = other.coerce(self)
+	    		a.send(method, b)
+	    	else
+	    		raise TypeError, "#{other.class} can't be coerced into MixedNumber"
+	    	end
+	    end
 		end
 
 	class MixedNumberFormatError < StandardError; end
