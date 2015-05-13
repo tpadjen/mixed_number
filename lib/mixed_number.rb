@@ -54,6 +54,21 @@ class MixedNumber < Numeric
     end
 	end
 
+	def -(other)
+		if other.is_a? MixedNumber
+    	MixedNumber.new(value - other.value)
+    elsif other.is_a? Numeric
+    	MixedNumber.new(value - other)
+    else
+    	if other.respond_to? :coerce
+    		a, b = other.coerce(self)
+    		a - b
+    	else
+    		raise TypeError, "#{other.class} can't be coerced into MixedNumber"
+    	end
+    end
+	end
+		
 	def coerce(other)
 		[MixedNumber.new(other), self]
 	end

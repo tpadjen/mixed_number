@@ -27,8 +27,23 @@ describe MixedNumber do
 		    expect(MixedNumber.new(0) + MixedNumber.new(1)).to eq(1)
 		    expect(MixedNumber.new(1) + Rational(1, 2)).to eq(1.5)
 		    expect(MixedNumber.new("2 2/5") + 1.5).to eq(3.9)
+		  end
+
+		  it 'concatenates' do
 		    expect(MixedNumber.new("2 2/4") + " hello").to eq("2 1/2 hello")
 		    expect("hello " + MixedNumber.new("2 2/4")).to eq("hello 2 1/2")
+		  end
+
+		  it 'fails to add to something non-coercable' do
+		    expect{MixedNumber.new(1) + Object.new}.to raise_error(TypeError)
+		  end
+		end
+
+		context '-' do
+		  it 'subtracts' do
+		    expect(MixedNumber.new(0) - MixedNumber.new(1)).to eq(-1)
+		    expect(MixedNumber.new(1) - Rational(1, 2)).to eq(0.5)
+		    expect(MixedNumber.new("2 2/5") - 1.7).to eq(7.0/10)
 		  end
 
 		  it 'fails to add to something non-coercable' do
