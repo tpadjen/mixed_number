@@ -27,11 +27,12 @@ describe MixedNumber do
 		    expect(MixedNumber.new(0) + MixedNumber.new(1)).to eq(1)
 		    expect(MixedNumber.new(1) + Rational(1, 2)).to eq(1.5)
 		    expect(MixedNumber.new("2 2/5") + 1.5).to eq(3.9)
+		    expect(MixedNumber.new("2 2/4") + " hello").to eq("2 1/2 hello")
+		    expect("hello " + MixedNumber.new("2 2/4")).to eq("hello 2 1/2")
 		  end
 
 		  it 'fails to add to something non-coercable' do
-		    expect{MixedNumber.new(1) + " sidfisdjf "}.to raise_error(TypeError)
-		    expect{" sidfisdjf " + MixedNumber.new(1)}.to raise_error(TypeError)
+		    expect{MixedNumber.new(1) + Object.new}.to raise_error(TypeError)
 		  end
 		end
 
@@ -108,7 +109,33 @@ describe MixedNumber do
 
 		end
 
+	end
+
+	context 'Conversion : ' do
 	  
+		context 'to String' do
+		  
+			it 'reduces to the closest whole number' do
+			  expect(MixedNumber.new("2 2/10").to_s).to eq("2 1/5")
+			  expect(MixedNumber.new("3/15").to_s).to eq("1/5")
+			  expect(MixedNumber.new("35/15").to_s).to eq("2 1/3")
+			  expect(MixedNumber.new(1.5).to_s).to eq("1 1/2")
+			end
+
+			it 'works with negative numbers' do
+			  expect(MixedNumber.new("-2 2/10").to_s).to eq("-2 1/5")
+			  expect(MixedNumber.new("-3/15").to_s).to eq("-1/5")
+			  expect(MixedNumber.new("-35/15").to_s).to eq("-2 1/3")
+			  expect(MixedNumber.new(-1.5).to_s).to eq("-1 1/2")
+			end
+
+			it 'is the same explicit and implicit' do
+			  mixed = MixedNumber.new("-3 8/4")
+			  expect(mixed.to_s).to eq(mixed.to_str) 
+			end
+
+		end
+
 	end
 
 end
