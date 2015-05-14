@@ -210,6 +210,93 @@ describe MixedNumber do
 		  end
 		end
 
+		context 'magnitude' do
+		  it 'finds the absolute value' do
+		    expect(MixedNumber.new("-3 2/4").magnitude).to eq(3.5)
+		    expect(MixedNumber.new( "3 2/4").magnitude).to eq(3.5)
+		  end
+		end
+
+		context 'modulo' do
+		  it 'modulates' do
+		    expect(MixedNumber.new(5).modulo(2)).to eq(5-2*(5.0/2).floor)
+		  end
+		end
+
+		context 'nonzero?' do
+		  it 'returns self or nil' do
+		    one  = MixedNumber.new(1)
+		    zero = MixedNumber.new(0)
+		    expect(one.nonzero?).to be(one)
+		    expect(zero.nonzero?).to be(nil)
+		  end
+		end
+
+		context 'phase' do
+		  it 'phases' do
+		    expect(MixedNumber.new( 4).phase).to be(0)
+		    expect(MixedNumber.new(-4).phase).to be(Math::PI)
+		  end
+		end
+
+		context 'polar' do
+		  it 'polarizes' do
+		    one = MixedNumber.new(1)
+		  	expect(one.polar).to eq([one.abs, one.arg])
+		  end
+		end
+
+		context 'real' do
+		  it 'is self' do
+		    one = MixedNumber.new(1)
+		  	expect(one.real).to eq(one)
+		  end
+		end
+
+		context 'real?' do
+		  it 'is true' do
+		    one = MixedNumber.new(1)
+		  	expect(one.real?).to eq(true)
+		  end
+		end
+
+		context 'rect' do
+		  it 'rectangularizes' do
+		    one = MixedNumber.new(1)
+		  	expect(one.rect).to 			 eq([one, 0])
+		  	expect(one.rectangular).to eq([one, 0])
+		  end
+		end
+
+		context 'remainder' do
+		  it 'finds the remainder' do
+		    expect(MixedNumber.new(33).remainder(10)).to eq(3)
+		  end
+		end
+
+		context 'round' do
+		  it 'rounds' do
+		    expect(MixedNumber.new(1  ).round).to eq(1)
+		    expect(MixedNumber.new(1.2).round).to eq(1)
+		    expect(MixedNumber.new(1.5).round).to eq(2)
+		    expect(MixedNumber.new(1.6).round).to eq(2)
+		  end
+		end
+
+		context 'truncate' do
+		  it 'truncates' do
+		    expect(MixedNumber.new(1  ).truncate).to eq(1)
+		    expect(MixedNumber.new(1.2).truncate).to eq(1)
+		  end
+		end
+
+		context 'zero?' do
+		  it 'finds zero' do
+		    expect(MixedNumber.new(0).zero?).to be(true)
+		    expect(MixedNumber.new(1).zero?).to be(false)
+		  end
+		end
+
 	end
 
 	context 'Parsing : ' do
