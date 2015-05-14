@@ -3,23 +3,18 @@ require "mixed_number/version"
 class MixedNumber < Numeric
 
 	class << self
-		DECIMAL_NUMBER_REGEX  = /^-?\d+(.\d+)?$/
-		RATIONAL_NUMBER_REGEX = /^-?\d+\/\d+$/
-		MIXED_NUMBER_REGEX    = /^-?\d+\s+\d+\/\d+$/
+		DECIMAL_NUMBERS  = /^-?\d+(.\d+)?$/
+		RATIONAL_NUMBERS = /^-?\d+\/\d+$/
+		MIXED_NUMBERS    = /^-?\d+\s+\d+\/\d+$/
+		VALID_NUMBERS = Regexp.union(DECIMAL_NUMBERS, RATIONAL_NUMBERS, MIXED_NUMBERS) 
 
 		def parse(input=0)
 			input = input.to_s.strip
-			raise MixedNumberFormatError unless is_mixed_number?(input)
+			raise MixedNumberFormatError unless input =~ VALID_NUMBERS
 			
 			reduction_method = input =~ /^-/ ? :- : :+
 			new(input.split.map { |r| Rational(r) }.reduce(reduction_method).to_r)
 		end
-
-		private
-
-			def is_mixed_number?(s)
-				s =~ Regexp.union(DECIMAL_NUMBER_REGEX, RATIONAL_NUMBER_REGEX, MIXED_NUMBER_REGEX)
-			end
 	end
 
 	def whole
