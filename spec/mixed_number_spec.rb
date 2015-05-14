@@ -11,6 +11,15 @@ describe MixedNumber do
 		context 'abs' do
 		  it 'finds the absolute value' do
 		    expect(MixedNumber.new("-3 2/4").abs).to eq(3.5)
+		    expect(MixedNumber.new( "3 2/4").abs).to eq(3.5)
+		  end
+		end
+
+		context 'abs2' do
+		  it 'finds the square of the value' do
+		    expect(MixedNumber.new(" 3"    ).abs2).to eq(9)
+		    expect(MixedNumber.new("-3"    ).abs2).to eq(9)
+		    expect(MixedNumber.new("-3 2/4").abs2).to eq(49.0/4)
 		  end
 		end
 

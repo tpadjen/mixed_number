@@ -1,7 +1,7 @@
 require "mixed_number/version"
 
 class MixedNumber < Numeric
-	extend Forwardable
+	# extend Forwardable
 
 	attr_accessor :value
 
@@ -9,7 +9,7 @@ class MixedNumber < Numeric
 	RATIONAL_NUMBER_REGEX = /^-?\d+\/\d+$/
 	MIXED_NUMBER_REGEX    = /^-?\d+\s+\d+\/\d+$/
 
-	def_delegators :@value, :abs, :to_r
+	# def_delegators :@value
 
 	def initialize(input=0)
 		input = input.to_s.strip
@@ -56,8 +56,6 @@ class MixedNumber < Numeric
 	def quo(other)
 		combine(:quo, other)
 	end
-
-
 		
 	def coerce(other)
 		[MixedNumber.new(other), self]
