@@ -4,7 +4,7 @@ class MixedNumber < Numeric
 	attr_accessor :value
 
 	extend Forwardable
-	def_delegators :@value, :to_f
+	def_delegators :@value, :to_f, :to_i
 
 	DECIMAL_NUMBER_REGEX  = /^-?\d+(.\d+)?$/
 	RATIONAL_NUMBER_REGEX = /^-?\d+\/\d+$/
@@ -70,6 +70,10 @@ class MixedNumber < Numeric
 
 	def to_str
 		to_s
+	end
+
+	def to_r
+		value
 	end
 
 	private

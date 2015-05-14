@@ -402,6 +402,21 @@ describe MixedNumber do
 
 		end
 
+		it 'to integer' do
+		  expect(MixedNumber.new(1).to_i).to be_a(Fixnum)
+		  expect(MixedNumber.new(1).to_i).to eq(1)
+		end
+
+		it 'to float' do
+		  expect(MixedNumber.new(1).to_f).to be_a(Float)
+		  expect(MixedNumber.new(1).to_f).to eq(1.0)
+		end
+
+		it 'to rational' do
+		  expect(MixedNumber.new(1).to_r).to be_a(Rational)
+		  expect(MixedNumber.new(1).to_r).to eq(Rational(1, 1))
+		end
+
 	end
 
 	context 'Parts' do
