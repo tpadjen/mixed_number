@@ -27,7 +27,7 @@ class MixedNumber < Numeric
 	end
 
 	def fraction
-		(abs - whole.abs).to_r
+		abs.to_r - whole.abs
 	end
 
 	def ==(other)
@@ -55,7 +55,7 @@ class MixedNumber < Numeric
 	end
 
 	def to_s
-		sign + remove_zeroes("#{whole.abs} #{fraction}")
+		@rational_string
 	end
 
 	alias_method :/, :quo
@@ -71,6 +71,7 @@ class MixedNumber < Numeric
 
 		def initialize(r)
 			@rational = r
+			@rational_string = sign + remove_zeroes("#{whole.abs} #{fraction}")
 		end
 
 		def sign
