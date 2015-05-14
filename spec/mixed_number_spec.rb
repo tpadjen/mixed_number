@@ -112,6 +112,95 @@ describe MixedNumber do
 		  end
 		end
 
+		context '-@' do
+		  it 'negates' do
+		    expect(-MixedNumber.new(4)).to eq(-4)
+		    expect(-MixedNumber.new(-4)).to eq(4)
+		  end
+		end
+
+		context '+@' do
+		  it 'positivity' do
+		    expect(+MixedNumber.new(4)).to eq(4)
+		    expect(+MixedNumber.new(-4)).to eq(-4)
+		  end
+		end
+
+		context 'angle' do
+		  it 'angles' do
+		    expect(MixedNumber.new(4).angle).to be(0)
+		    expect(MixedNumber.new(-4).angle).to be(Math::PI)
+		  end
+		end
+
+		context 'arg' do
+		  it 'args' do
+		    expect(MixedNumber.new(4).arg).to be(0)
+		    expect(MixedNumber.new(-4).arg).to be(Math::PI)
+		  end
+		end
+
+		context 'ceil' do
+		  it 'finds the next highest integer' do
+		    expect(MixedNumber.new(   1).ceil).to eq( 1)
+		    expect(MixedNumber.new( 1.2).ceil).to eq( 2)
+		    expect(MixedNumber.new(-1.2).ceil).to eq(-1)
+		    expect(MixedNumber.new(-1.0).ceil).to eq(-1)
+		  end
+		end
+
+		context 'floor' do
+		  it 'finds the previous highest integer' do
+		    expect(MixedNumber.new(   1).floor).to eq( 1)
+		    expect(MixedNumber.new( 1.2).floor).to eq( 1)
+		    expect(MixedNumber.new(-1.2).floor).to eq(-2)
+		    expect(MixedNumber.new(-1.0).floor).to eq(-1)
+		  end
+		end
+
+		context 'conj' do
+		  it 'conjugates' do
+		  	mixed = MixedNumber.new(1)
+		    expect(mixed.conj).to eq(mixed)
+		    expect(mixed.conjugate).to eq(mixed)
+		  end
+		end
+
+		context 'imag' do
+		  it 'finds imaginary part' do
+		  	mixed = MixedNumber.new(1)
+		    expect(mixed.imag).to eq(0)
+		    expect(mixed.imaginary).to eq(0)
+		  end
+		end
+
+		context 'div' do
+		  it 'divides to an integer' do
+		    expect(MixedNumber.new(   1).div(2)).to eq( 0)
+		    expect(MixedNumber.new(-1.0).div(2)).to eq(-1)
+		    expect(MixedNumber.new( 2.2).div(2)).to eq( 1)
+		    expect(MixedNumber.new(-2.2).div(2)).to eq(-2)
+		  end
+		end
+
+		context 'divmod' do
+		  it 'finds quotient and modulus' do
+		    expect(MixedNumber.new(   1).divmod(2)).to eq([ 0,  1])
+		    expect(MixedNumber.new(-1.0).divmod(2)).to eq([-1,  1])
+		    expect(MixedNumber.new( 2.2).divmod(2)).to eq([ 1,  0.2])
+		    expect(MixedNumber.new(-2.2).divmod(2)).to eq([-2,  9.0/5])
+		  end
+		end
+
+		context 'eql?' do
+		  it 'performs type and value equality comparison' do
+		    expect(MixedNumber.new(1).eql?(MixedNumber.new(2.0/2))).to be(true)
+		    expect(MixedNumber.new(1).eql?(MixedNumber.new(2.0/4))).to be(false)
+		    expect(MixedNumber.new(1).eql?(2.0/2)).to be(false)
+		    expect(MixedNumber.new(1).eql?(2.0/4)).to be(false)
+		  end
+		end
+
 	end
 
 	context 'Parsing : ' do
