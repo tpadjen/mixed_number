@@ -1,15 +1,11 @@
 require "mixed_number/version"
 
 class MixedNumber < Numeric
-	# extend Forwardable
-
 	attr_accessor :value
 
 	DECIMAL_NUMBER_REGEX  = /^-?\d+(.\d+)?$/
 	RATIONAL_NUMBER_REGEX = /^-?\d+\/\d+$/
 	MIXED_NUMBER_REGEX    = /^-?\d+\s+\d+\/\d+$/
-
-	# def_delegators :@value
 
 	def initialize(input=0)
 		input = input.to_s.strip
