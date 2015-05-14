@@ -34,6 +34,7 @@ describe MixedNumber do
 		context '+' do
 		  it 'adds' do
 		    expect(MixedNumber.new(0) + MixedNumber.new(1)).to eq(1)
+		    expect(0 + MixedNumber.new(1)).to eq(1)
 		    expect(MixedNumber.new(1) + Rational(1, 2)).to eq(1.5)
 		    expect(MixedNumber.new("2 2/5") + 1.5).to eq(3.9)
 		  end
@@ -51,6 +52,7 @@ describe MixedNumber do
 		context '-' do
 		  it 'subtracts' do
 		    expect(MixedNumber.new(0) - MixedNumber.new(1)).to eq(-1)
+		    expect(0 - MixedNumber.new(1)).to eq(-1)
 		    expect(MixedNumber.new(1) - Rational(1, 2)).to eq(0.5)
 		    expect(MixedNumber.new("2 2/5") - 1.7).to eq(7.0/10)
 		  end
@@ -63,6 +65,7 @@ describe MixedNumber do
 		context '/' do
 		  it 'divides' do
 		    expect(MixedNumber.new(4) / MixedNumber.new(2)).to eq(2)
+		    expect(4 / MixedNumber.new(2)).to eq(2)
 		    expect(MixedNumber.new(1) / Rational(1, 2)).to eq(2)
 		    expect(MixedNumber.new("2 1/2") / 2).to eq(1.25)
 		  end
@@ -75,12 +78,26 @@ describe MixedNumber do
 		context '*' do
 		  it 'multiplies' do
 		    expect(MixedNumber.new(4) * MixedNumber.new(2)).to eq(8)
+		    expect(4 * MixedNumber.new(2)).to eq(8)
 		    expect(MixedNumber.new(3) * Rational(1, 2)).to eq(1.5)
 		    expect(MixedNumber.new("2 1/2") * 2).to eq(5)
 		  end
 
 		  it 'fails to multiply something non/coercable' do
 		    expect{MixedNumber.new(1) * Object.new}.to raise_error(TypeError)
+		  end
+		end
+
+		context '**' do
+		  it 'exponentiates' do
+		    expect(MixedNumber.new(4) ** MixedNumber.new(2)).to eq(16)
+		    expect(4 ** MixedNumber.new(2)).to eq(16)
+		    expect(MixedNumber.new(3) ** Rational(1, 2)).to eq(3**0.5)
+		    expect(MixedNumber.new("2 1/2") ** 2).to eq(2.5**2)
+		  end
+
+		  it 'fails to exponentiate something non/coercable' do
+		    expect{MixedNumber.new(1) ** Object.new}.to raise_error(TypeError)
 		  end
 		end
 
