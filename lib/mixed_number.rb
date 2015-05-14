@@ -27,7 +27,7 @@ class MixedNumber < Numeric
 	end
 
 	def fraction
-		((abs - whole.abs) % 1).to_r
+		(abs - whole.abs).to_r
 	end
 
 	def ==(other)
