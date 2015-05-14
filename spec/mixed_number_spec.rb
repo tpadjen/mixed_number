@@ -63,6 +63,18 @@ describe MixedNumber do
 		  end
 		end
 
+		context '*' do
+		  it 'multiplies' do
+		    expect(MixedNumber.new(4) * MixedNumber.new(2)).to eq(8)
+		    expect(MixedNumber.new(3) * Rational(1, 2)).to eq(1.5)
+		    expect(MixedNumber.new("2 1/2") * 2).to eq(5)
+		  end
+
+		  it 'fails to multiply something non/coercable' do
+		    expect{MixedNumber.new(1) * Object.new}.to raise_error(TypeError)
+		  end
+		end
+
 	end
 
 	context 'Parsing : ' do

@@ -45,6 +45,10 @@ class MixedNumber < Numeric
 		combine(:-, other)
 	end
 
+	def *(other)
+		combine(:*, other)
+	end
+
 	def /(other)
 		quo(other)
 	end
