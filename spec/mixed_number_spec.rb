@@ -201,6 +201,15 @@ describe MixedNumber do
 		  end
 		end
 
+		context 'integer?' do
+		  it 'checks for integers' do
+		    expect(MixedNumber.new(1  ).integer?).to be(false)
+		    expect(MixedNumber.new(1.0).integer?).to be(false)
+		    expect(MixedNumber.new("2 1/2").integer?).to be(false)
+		    expect(MixedNumber.new("2 4/4").integer?).to be(false)
+		  end
+		end
+
 	end
 
 	context 'Parsing : ' do
