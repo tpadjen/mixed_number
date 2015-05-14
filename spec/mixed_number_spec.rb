@@ -51,6 +51,18 @@ describe MixedNumber do
 		  end
 		end
 
+		context '/' do
+		  it 'divides' do
+		    expect(MixedNumber.new(4) / MixedNumber.new(2)).to eq(2)
+		    expect(MixedNumber.new(1) / Rational(1, 2)).to eq(2)
+		    expect(MixedNumber.new("2 1/2") / 2).to eq(1.25)
+		  end
+
+		  it 'fails to divide something non/coercable' do
+		    expect{MixedNumber.new(1) / Object.new}.to raise_error(TypeError)
+		  end
+		end
+
 	end
 
 	context 'Parsing : ' do

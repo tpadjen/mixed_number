@@ -38,11 +38,19 @@ class MixedNumber < Numeric
 	def +(other)
 		return to_s + other if other.is_a? String
 
-		combine(:+)
+		combine(:+, other)
 	end
 
 	def -(other)
-		combine(:-)
+		combine(:-, other)
+	end
+
+	def /(other)
+		quo(other)
+	end
+
+	def quo(other)
+		combine(:quo, other)
 	end
 
 
@@ -73,7 +81,7 @@ class MixedNumber < Numeric
 			string.gsub(/^0 /, "").gsub(/ 0$/, "").gsub(/ 0\/\d+/, "")
 		end
 
-		def combine(method)
+		def combine(method, other)
 			if other.is_a? MixedNumber
 	    	MixedNumber.new(value.send(method, other.value))
 	    elsif other.is_a? Numeric
