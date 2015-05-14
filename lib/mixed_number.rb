@@ -12,7 +12,7 @@ class MixedNumber < Numeric
 			raise MixedNumberFormatError unless is_mixed_number?(input)
 			
 			reduction_method = input =~ /^-/ ? :- : :+
-			MixedNumber.new(input.split.map { |r| Rational(r) }.reduce(reduction_method).to_r)
+			new(input.split.map { |r| Rational(r) }.reduce(reduction_method).to_r)
 		end
 
 		private
@@ -79,6 +79,8 @@ class MixedNumber < Numeric
 	def method_missing(name, *args, &block)
 		@rational.send(name, *args, &block)
 	end
+
+	private_class_method :new
 
 	private
 

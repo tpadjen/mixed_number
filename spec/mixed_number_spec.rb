@@ -1,6 +1,14 @@
 require "mixed_number"
 
 describe MixedNumber do
+
+	context 'Creating' do
+	  
+		it 'should have a private constructor' do
+			expect(MixedNumber.respond_to?(:new)).to be(false)
+		end
+
+	end
   
 	context 'Numeric : ' do
 	  
