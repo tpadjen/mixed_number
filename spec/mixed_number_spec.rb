@@ -101,6 +101,17 @@ describe MixedNumber do
 		  end
 		end
 
+		context '==' do
+		  it 'compares equality' do
+		    expect(MixedNumber.new(4) == MixedNumber.new(2)).to eq(false)
+		    expect(MixedNumber.new(4) == MixedNumber.new(4)).to eq(true)
+		    expect(4 == MixedNumber.new(4)).to eq(true)
+		    expect(4 == MixedNumber.new(2)).to eq(false)
+		    expect(MixedNumber.new(2) == 4).to eq(false)
+		    expect(MixedNumber.new(4) == 4).to eq(true)
+		  end
+		end
+
 	end
 
 	context 'Parsing : ' do
