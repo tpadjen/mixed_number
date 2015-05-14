@@ -44,24 +44,10 @@ class MixedNumber < Numeric
 		combine(:+, other)
 	end
 
-	def -(other)
-		combine(:-, other)
-	end
-
-	def *(other)
-		combine(:*, other)
-	end
-
-	def **(other)
-		combine(:**, other)
-	end
-
-	def /(other)
-		quo(other)
-	end
-
-	def quo(other)
-		combine(:quo, other)
+	[:-, :*, :**, :quo].each do |method_name|
+		define_method method_name do |other|
+			combine(method_name, other)
+		end
 	end
 		
 	def coerce(other)
@@ -72,9 +58,8 @@ class MixedNumber < Numeric
 		sign + remove_zeroes("#{whole.abs} #{fraction}")
 	end
 
-	def to_str
-		to_s
-	end
+	alias_method :/, :quo
+	alias_method :to_str, :to_s
 
 	def method_missing(name, *args, &block)
 		@rational.send(name, *args, &block)
