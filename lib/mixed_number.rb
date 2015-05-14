@@ -9,7 +9,7 @@ class MixedNumber < Numeric
 
 	def initialize(input=0)
 		input = input.to_s.strip
-		raise MixedNumberFormatError unless is_mixed_number(input)
+		raise MixedNumberFormatError unless is_mixed_number?(input)
 		
 		reduction_method = input =~ /^-/ ? :- : :+
 		@value = input.split.map { |r| Rational(r) }.reduce(reduction_method).to_r
@@ -67,7 +67,7 @@ class MixedNumber < Numeric
 
 	private
 
-		def is_mixed_number(s)
+		def is_mixed_number?(s)
 			s =~ Regexp.union(DECIMAL_NUMBER_REGEX, RATIONAL_NUMBER_REGEX, MIXED_NUMBER_REGEX)
 		end
 
