@@ -1,4 +1,5 @@
 require "mixed_number/version"
+require "bigdecimal"
 
 class MixedNumber < Numeric
 
@@ -9,12 +10,17 @@ class MixedNumber < Numeric
 		VALID_NUMBERS = Regexp.union(DECIMAL_NUMBERS, RATIONAL_NUMBERS, MIXED_NUMBERS) 
 
 		def parse(input=0)
-			input = input.to_s.strip
-			raise MixedNumberFormatError unless input =~ VALID_NUMBERS
+			n = stringify(input).strip
+			raise MixedNumberFormatError unless n =~ VALID_NUMBERS
 			
-			reduction_method = input =~ /^-/ ? :- : :+
-			new(input.split.map { |r| Rational(r) }.reduce(reduction_method).to_r)
+			reduction_method = n =~ /^-/ ? :- : :+
+			new(n.split.map { |r| Rational(r) }.reduce(reduction_method).to_r)
 		end
+
+		private
+			def stringify(n)
+				n.is_a?(BigDecimal) ? n.to_s('F') : n.to_s
+			end
 	end
 
 	def whole
@@ -51,6 +57,10 @@ class MixedNumber < Numeric
 
 	def to_s
 		@rational_string
+	end
+
+	def to_d
+		BigDecimal(@rational, 32)
 	end
 
 	alias_method :/, :quo

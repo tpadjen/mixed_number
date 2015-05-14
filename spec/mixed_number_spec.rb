@@ -132,6 +132,12 @@ describe MixedNumber do
 			  expect(MixedNumber(-1.5)).to eq(-3.0/2)
 			end
 
+			it 'a BigDecimal' do
+			  expect(MixedNumber(BigDecimal( 1.5,  16))).to eq( 3.0/2)
+			  expect(MixedNumber(BigDecimal(-1.5,  16))).to eq(-3.0/2)
+			  expect(MixedNumber(BigDecimal(1.0/3, 16))).to be_within(0.000001).of(1.0/3)
+			end
+
 			context 'Strings : ' do
 			  it 'a whole number' do
 			    expect(MixedNumber( "1")).to eq( 1)
@@ -205,6 +211,19 @@ describe MixedNumber do
 			it 'removes zero parts' do
 			  expect(MixedNumber("2/10").to_s).to eq("1/5")
 			  expect(MixedNumber("1 0/10").to_s).to eq("1")
+			end
+
+		end
+
+		context 'to BigDecimal' do
+		  
+			it 'converts' do
+			  expect(MixedNumber().to_d).to be_a(BigDecimal)
+			end
+
+			it 'is accurate' do
+			  expect(MixedNumber(  4.0/3).to_d).to be_within(0.0000001).of(4.0/3)
+			  expect(MixedNumber("1 1/3").to_d).to be_within(0.0000001).of(4.0/3)
 			end
 
 		end
