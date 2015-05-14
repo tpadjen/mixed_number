@@ -82,17 +82,12 @@ class MixedNumber < Numeric
 		end
 
 		def combine(method, other)
-			if other.is_a? MixedNumber
+	    if other.is_a? Numeric
 	    	MixedNumber(@rational.send(method, other.to_r))
-	    elsif other.is_a? Numeric
-	    	MixedNumber(@rational.send(method, other))
 	    else
-	    	if other.respond_to? :coerce
-	    		a, b = other.coerce(self)
-	    		a.send(method, b)
-	    	else
-	    		raise TypeError, "#{other.class} can't be coerced into MixedNumber"
-	    	end
+	    	raise TypeError, "#{other.class} can't be coerced into MixedNumber" unless other.respond_to? :coerce
+	    	a, b = other.coerce(self)
+	    	a.send(method, b)
 	    end
 		end
 
