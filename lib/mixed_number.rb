@@ -1,37 +1,41 @@
 require "mixed_number/version"
 
 class MixedNumber < Numeric
-	attr_accessor :value
 
-	extend Forwardable
-	def_delegators :@value, :to_f, :to_i
+	class << self
+		DECIMAL_NUMBER_REGEX  = /^-?\d+(.\d+)?$/
+		RATIONAL_NUMBER_REGEX = /^-?\d+\/\d+$/
+		MIXED_NUMBER_REGEX    = /^-?\d+\s+\d+\/\d+$/
 
-	DECIMAL_NUMBER_REGEX  = /^-?\d+(.\d+)?$/
-	RATIONAL_NUMBER_REGEX = /^-?\d+\/\d+$/
-	MIXED_NUMBER_REGEX    = /^-?\d+\s+\d+\/\d+$/
+		def parse(input=0)
+			input = input.to_s.strip
+			raise MixedNumberFormatError unless is_mixed_number?(input)
+			
+			reduction_method = input =~ /^-/ ? :- : :+
+			MixedNumber.new(input.split.map { |r| Rational(r) }.reduce(reduction_method).to_r)
+		end
 
-	def initialize(input=0)
-		input = input.to_s.strip
-		raise MixedNumberFormatError unless is_mixed_number?(input)
-		
-		reduction_method = input =~ /^-/ ? :- : :+
-		@value = input.split.map { |r| Rational(r) }.reduce(reduction_method).to_r
+		private
+
+			def is_mixed_number?(s)
+				s =~ Regexp.union(DECIMAL_NUMBER_REGEX, RATIONAL_NUMBER_REGEX, MIXED_NUMBER_REGEX)
+			end
 	end
 
 	def whole
-		value.to_i
+		to_i
 	end
 
 	def fraction
-		((value.abs - whole.abs) % 1).to_r
+		((abs - whole.abs) % 1).to_r
 	end
 
 	def ==(other)
-		@value == other
+		@rational == other
 	end
 
 	def <=>(other)
-		@value <=> other
+		@rational <=> other
 	end
 
 	def +(other)
@@ -61,7 +65,7 @@ class MixedNumber < Numeric
 	end
 		
 	def coerce(other)
-		[MixedNumber.new(other), self]
+		[MixedNumber(other), self]
 	end
 
 	def to_s
@@ -72,18 +76,18 @@ class MixedNumber < Numeric
 		to_s
 	end
 
-	def to_r
-		value
+	def method_missing(name, *args, &block)
+		@rational.send(name, *args, &block)
 	end
 
 	private
 
-		def is_mixed_number?(s)
-			s =~ Regexp.union(DECIMAL_NUMBER_REGEX, RATIONAL_NUMBER_REGEX, MIXED_NUMBER_REGEX)
+		def initialize(r)
+			@rational = r
 		end
 
 		def sign
-			value < 0 ? "-" : ""
+			self < 0 ? "-" : ""
 		end
 
 		def remove_zeroes(string)
@@ -92,9 +96,9 @@ class MixedNumber < Numeric
 
 		def combine(method, other)
 			if other.is_a? MixedNumber
-	    	MixedNumber.new(value.send(method, other.value))
+	    	MixedNumber(@rational.send(method, other.to_r))
 	    elsif other.is_a? Numeric
-	    	MixedNumber.new(value.send(method, other))
+	    	MixedNumber(@rational.send(method, other))
 	    else
 	    	if other.respond_to? :coerce
 	    		a, b = other.coerce(self)
@@ -106,5 +110,11 @@ class MixedNumber < Numeric
 		end
 
 	class MixedNumberFormatError < StandardError; end
+end
+
+def MixedNumber(input=0)
+	return input if input.kind_of?(MixedNumber)
+
+	MixedNumber.parse(input)
 end
 
