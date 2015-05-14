@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = MixedNumber::VERSION
   spec.authors       = ["Tim Padjen"]
   spec.email         = ["tpadjen@gmail.com"]
-  spec.summary       = %q{Use mixed numbers}
+  spec.summary       = %q{Mixed numbers in ruby}
   spec.homepage      = ""
   spec.license       = "MIT"
 
