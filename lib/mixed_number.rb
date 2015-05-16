@@ -4,7 +4,7 @@ require "bigdecimal"
 class MixedNumber < Numeric
 
 	class << self
-		DECIMAL_NUMBERS  = /^-?\d+(.\d+)?$/
+		DECIMAL_NUMBERS  = /^-?\d+(\.\d+)?$/
 		RATIONAL_NUMBERS = /^-?\d+\/\d+$/
 		MIXED_NUMBERS    = /^-?\d+\s+\d+\/\d+$/
 		VALID_NUMBERS = Regexp.union(DECIMAL_NUMBERS, RATIONAL_NUMBERS, MIXED_NUMBERS) 

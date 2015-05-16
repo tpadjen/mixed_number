@@ -176,7 +176,7 @@ describe MixedNumber do
 			end
 
 			it 'raises an error when not formatted like a mixed number' do
-			  ["", "1 1 2/3", "1/2 1", "a", "a/b", "a 3/4", "1 2 / 3", "1 -2/3", "1 2/-3", "word"].each do |mixed|
+			  ["", "1 1 2/3", "1/2 1", "a", "a/b", "a 3/4", "1 2 / 3", "1 -2/3", "1 2/-3", "word", "1 1221"].each do |mixed|
 			  	expect{MixedNumber(mixed)}.to raise_error(MixedNumber::MixedNumberFormatError)
 			  end
 			end
