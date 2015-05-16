@@ -89,7 +89,7 @@ class MixedNumber < Numeric
 		end
 
 		def remove_zeroes(string)
-			string.gsub(/^0 /, "").gsub(/ 0$/, "").gsub(/ 0\/\d+/, "")
+			string.gsub(/^0 /, "").gsub(/ 0$/, "").gsub(/ 0\/\d+/, "").gsub(/0\/\d+/, "0")
 		end
 
 		def combine(method, other)

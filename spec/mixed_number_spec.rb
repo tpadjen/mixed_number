@@ -195,7 +195,7 @@ describe MixedNumber do
 			  expect(MixedNumber("35/15").to_s).to eq("2 1/3")
 			  expect(MixedNumber(1.5).to_s).to eq("1 1/2")
 			end
-
+			  
 			it 'works with negative numbers' do
 			  expect(MixedNumber("-2 2/10").to_s).to eq("-2 1/5")
 			  expect(MixedNumber("-3/15").to_s).to eq("-1/5")
@@ -209,8 +209,9 @@ describe MixedNumber do
 			end
 
 			it 'removes zero parts' do
-			  expect(MixedNumber("2/10").to_s).to eq("1/5")
+			  expect(MixedNumber("  2/10").to_s).to eq("1/5")
 			  expect(MixedNumber("1 0/10").to_s).to eq("1")
+			  expect(MixedNumber("  0/10").to_s).to eq("0")
 			end
 
 		end
