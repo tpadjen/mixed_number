@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Tim Padjen"]
   spec.email         = ["tpadjen@gmail.com"]
   spec.summary       = %q{Mixed numbers in ruby}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/tpadjen/mixed_number"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
