@@ -63,8 +63,13 @@ class MixedNumber < Numeric
 		BigDecimal(@rational, 32)
 	end
 
+	def to_m
+		self
+	end
+
 	alias_method :/, :quo
 	alias_method :to_str, :to_s
+	alias_method :to_mixed, :to_m
 
 	def method_missing(name, *args, &block)
 		@rational.send(name, *args, &block)
