@@ -248,4 +248,86 @@ describe MixedNumber do
 
 	end
 
+	context 'Converting to MixedNumbers' do
+
+	  context 'Strings : ' do
+	    
+	  	it 'has a conversion method' do
+	  	  expect("1/3").to respond_to(:to_m)
+	  	  expect("1/3").to_not respond_to(:to_mixed)
+	  	end
+
+	  	it 'can convert to a mixed number' do
+	  	  expect("1/2".to_m).to be_a(MixedNumber)
+	  	  expect("1/2".to_m).to eq(MixedNumber(1.0/2))
+	  	end
+
+	  end
+
+	  context 'Fixnums : ' do
+	    
+	  	it 'has a conversion method' do
+	  	  expect(1).to respond_to(:to_m)
+	  	  expect(1).to respond_to(:to_mixed)
+	  	end
+
+	  	it 'can convert to a mixed number' do
+	  	  expect(1.to_m).to be_a(MixedNumber)
+	  	  expect(1.to_m).to eq(MixedNumber(1))
+	  	  expect(1.to_mixed).to be_a(MixedNumber)
+	  	  expect(1.to_mixed).to eq(MixedNumber(1))
+	  	end
+
+	  end
+
+	  context 'Floats : ' do
+	    
+	  	it 'has a conversion method' do
+	  	  expect(1.5).to respond_to(:to_m)
+	  	  expect(1.5).to respond_to(:to_mixed)
+	  	end
+
+	  	it 'can convert to a mixed number' do
+	  	  expect(1.5.to_m).to be_a(MixedNumber)
+	  	  expect(1.5.to_m).to eq(MixedNumber(1.5))
+	  	  expect(1.5.to_mixed).to be_a(MixedNumber)
+	  	  expect(1.5.to_mixed).to eq(MixedNumber(1.5))
+	  	end
+
+	  end
+
+	  context 'Rationals : ' do
+	    
+	  	it 'has a conversion method' do
+	  	  expect(Rational(2, 4)).to respond_to(:to_m)
+	  	  expect(Rational(2, 4)).to respond_to(:to_mixed)
+	  	end
+
+	  	it 'can convert to a mixed number' do
+	  	  expect(Rational(2, 4).to_m).to be_a(MixedNumber)
+	  	  expect(Rational(2, 4).to_m).to eq(MixedNumber(0.5))
+	  	  expect(Rational(2, 4).to_mixed).to be_a(MixedNumber)
+	  	  expect(Rational(2, 4).to_mixed).to eq(MixedNumber(0.5))
+	  	end
+
+	  end
+
+	  context 'BigDecimals : ' do
+	    
+	  	it 'has a conversion method' do
+	  	  expect(BigDecimal(0.8, 4)).to respond_to(:to_m)
+	  	  expect(BigDecimal(0.8, 4)).to respond_to(:to_mixed)
+	  	end
+
+	  	it 'can convert to a mixed number' do
+	  	  expect(BigDecimal(0.8, 4).to_m).to be_a(MixedNumber)
+	  	  expect(BigDecimal(0.8, 4).to_m).to eq(MixedNumber(0.8))
+	  	  expect(BigDecimal(0.8, 4).to_mixed).to be_a(MixedNumber)
+	  	  expect(BigDecimal(0.8, 4).to_mixed).to eq(MixedNumber(0.8))
+	  	end
+
+	  end
+
+	end
+
 end

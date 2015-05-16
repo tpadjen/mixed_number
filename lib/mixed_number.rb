@@ -1,4 +1,4 @@
-require "mixed_number/version"
+require_relative "mixed_number/version"
 require "bigdecimal"
 
 class MixedNumber < Numeric
@@ -106,3 +106,25 @@ def MixedNumber(input=0)
 	MixedNumber.parse(input)
 end
 
+module CoreExtensions
+	module MixedNumberConversions
+		
+		module Strict
+			def to_mixed
+				MixedNumber(self)
+			end
+			
+			alias_method :to_m, :to_mixed
+		end
+		
+		module Unstrict
+			def to_m
+				MixedNumber(self)
+			end
+		end
+
+	end
+end
+
+Numeric.include CoreExtensions::MixedNumberConversions::Strict
+ String.include CoreExtensions::MixedNumberConversions::Unstrict
